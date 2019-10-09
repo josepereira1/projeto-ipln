@@ -3,12 +3,27 @@
 import re
 import sys
 
-text = open("input.txt").read()
+filename = sys.argv[1]
+word = sys.argv[2]
+number = sys.argv[3]
 
-#output = re.findall(r'(was(?:[\ \t\n\,\;\:\"\'\[\]\(\)\&]+\w+(?:(?:\-|[\@\.\w]*)\w+)?){1,5})', text)
+text = open(filename).read()
 
-output = re.findall(r'(was(?:[\ \t\n\,\;\:\"\'\[\]\(\)\&]+\w+(?:(?:\-|[\@\.\w]*)\w+)?){1,5})', text)
+#regex = "("+word+"(?:[\ \t\n\,\;\:\"\'\[\]\(\)\&]+\w+(?:(?:\-|[\@\.\w]*)\w+)?){1,"+number+"})"
 
+output = re.findall(regex, text)
 
 print(output)
+
+#cona = ""
+
+# for elem in output:
+#  	for ch in elem:
+#  		if ch != ' ':
+#  			cona = cona + ch
+
+
+# print(cona)
+
+
 

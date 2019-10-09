@@ -1,0 +1,9 @@
+Given a word and a text, calculate and print the matrix of the most common words that follow or precede it.
+
+Example:
+
+    cmatrix -A 3 está input.txt > output.txt
+    -A (after) - prints the 3 most common words following "está"
+
+
+

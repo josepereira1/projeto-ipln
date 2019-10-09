@@ -1,0 +1,12 @@
+Hoje está um lindo dia. O inverno está a chegar. A Rita está muito cansada. O comboio está a chegar. O Rui está muito doente. O trânsito está um pandemónio.
+
+
+RegEx was vou-te 
+
+ricardo@gmail.com www.facebook.com gskinner, and is proudly hosted by Media Temple.
+
+Edit the was Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.
+
+The side bar was includes: a "Cheatsheet hjgyguy uguyg guyguy", full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.
+
+Explore results with the Tools below. Replace & List output was custom results. Details lists capture groups. Explain describes your expression in plain English.

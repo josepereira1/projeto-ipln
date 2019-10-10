@@ -10,9 +10,14 @@ number = str(int(sys.argv[4])-1) # our algorithm iterates till last word
 
 text = open(filename).read() # reads all file to string
 if mode == "-A": regex = "(" + word + "(?:[\ \t\n\,\;\:\"\'\[\]\(\)]+\w+(?:(?:[\-\@\.\w]*)\w+)?){1," + number + "})"
-else: regex = "((?:[\ \t\n\,\;\:\"\'\[\]\(\)]*\w+(?:(?:[\-\@\.\w]*)\w+|\ )?){1,"+ number+"})"+ word
+else: regex = "(?:(?:(?:(?:\w+[\-\@\.\w\:\/]*)?)\w+[\ \t\n\,\;\:\"\'\[\]\(\)]*\ ){1," + number +"}"+ word +")"
 
 lines = re.findall(regex, text) # applies regex to string
+
+if not lines: 
+	print("Do not exist word " + word)
+	sys.exit()
+
 
 dic = {} # init dic
 
@@ -24,7 +29,8 @@ for line in lines:
 	# splits by space
 	words = clean.split(' ')
 	# first word is never used, ex: 'está'
-	words.pop(0)
+	if mode == "-A": words.pop(0)
+	else: del(words[len(words)-1])
 	
 	key = ""
 	i = 0
@@ -80,15 +86,10 @@ for l in range(0, maxl):
 				print(' ', end='')
 			print(' (' + str(dic[key]) + ') | ', end='') # PRINTAR O NÚMERO E SEPARAÇÃO
 		else:
-			for i in range(0, maxspaces + len(str(maxn))): # PRINTAR OS ESPAÇOS
+			for i in range(0, maxspaces + 3): # PRINTAR OS ESPAÇOS
 				print(' ', end='') 
 			print(' | ', end='') # PRINTAR SEPARAÇÃO
 	print(' ')
 
 
-# sort alphabetically Hash Table by key
-# for key in sorted(dic.keys()):
-# 	if key.find(" ") == -1:print("---------------")
-# 	print(key, "(" + str(dic[key]) + ")")
 
-# print("---------------")

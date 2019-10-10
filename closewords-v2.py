@@ -51,21 +51,24 @@ def displayMatrix(keys, dic):
 	l = 0
 
 	maxspaces = 0
+	maxl = 0
+	maxc = 0
 
 	for key in keys:
 		if ' ' not in key: # col change
 			l = 0
 			c = c + 1
+			if c > maxc: maxc = c
 		else:
 			l = l + 1
+			if l > maxl: maxl = l
 		mat[l][c] = key
 		n = len(key) + len(str(dic[key]))
 		if n > maxspaces:
 			maxspaces = n
 
-	maxl = l + 1
-	maxc = c + 1
-	maxn = max(dic.values())
+	maxc = maxc + 1
+	maxl = maxl + 1
 
 	# at this moment maxword and it's length is already known
 

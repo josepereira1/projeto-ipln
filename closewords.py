@@ -3,12 +3,15 @@
 import re
 import sys
 
-filename = sys.argv[1]
+mode = sys.argv[1]
 word = sys.argv[2]
-number = str(int(sys.argv[3])-1) # our algorithm iterates till last word
+filename = sys.argv[3]
+number = str(int(sys.argv[4])-1) # our algorithm iterates till last word
 
 text = open(filename).read() # reads all file to string
-regex = "(" + word + "(?:[\ \t\n\,\;\:\"\'\[\]\(\)]+\w+(?:(?:[\-\@\.\w]*)\w+)?){1," + number + "})"
+if mode == "-B": regex = "(" + word + "(?:[\ \t\n\,\;\:\"\'\[\]\(\)]+\w+(?:(?:[\-\@\.\w]*)\w+)?){1," + number + "})"
+else: regex = "((?:[\ \t\n\,\;\:\"\'\[\]\(\)]*\w+(?:(?:[\-\@\.\w]*)\w+|\ )?){1,"+ number+"})"+ word
+
 lines = re.findall(regex, text) # applies regex to string
 
 dic = {} # init dic

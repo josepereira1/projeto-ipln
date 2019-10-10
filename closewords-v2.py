@@ -43,7 +43,7 @@ def store(lines):
 
 	return dic
 
-def displayMatrix(keys, dic):
+def displayMatrix(keys, dic, word):
 	N = 50
 
 	mat = [ [ 0 for l in range(N) ] for c in range(N) ]
@@ -72,6 +72,8 @@ def displayMatrix(keys, dic):
 
 	# at this moment maxword and it's length is already known
 
+	print(word)
+
 	for l in range(0, maxl):
 		for c in range(0, maxc):
 			key = mat[l][c]
@@ -86,7 +88,7 @@ def displayMatrix(keys, dic):
 				print(' | ', end='') # PRINTAR SEPARAÇÃO
 		print(' ')
 
-# ---------------------------------------------------------------
+# ------------------------ MAIN ------------------------ 
 
 mode = sys.argv[1]
 word = sys.argv[2]
@@ -103,6 +105,7 @@ dic = store(lines)
 
 keys = list(sorted(dic.keys()))
 
-displayMatrix(keys, dic)
+displayMatrix(keys, dic, word)
 
+# ------------------------ MAIN ------------------------ 
 

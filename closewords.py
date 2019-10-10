@@ -42,4 +42,7 @@ for line in lines:
 
 # sort alphabetically Hash Table by key
 for key in sorted(dic.keys()):
-	print(key, dic[key])
+	if key.find(" ") == -1:print("---------------")
+	print(key, "(" + str(dic[key]) + ")")
+
+print("---------------")

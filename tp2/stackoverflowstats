@@ -58,11 +58,29 @@ def writeDictionary(dict, agregation , single, criterion, reverse):
 		root[iteration].set("value", str(val))
 		iteration = iteration + 1
 
-	f = open("output/" + agregation,"w")
+	f = open("output/" + agregation + ".xml","w")
 	f.write(str(etree.tostring(root, pretty_print = True, encoding='unicode')))
 	f.close()
 
 	return root
+
+def findPhrase(phrase, objective):
+	root = parseXML("data/Posts.xml")
+
+	d = {}
+
+	for elem in root.iter():
+		if elem.tag not in objective:
+			text = elem.get("Body")
+			idPost = int(elem.get("Id"))
+			res = re.findall(phrase, text)
+			if len(res) == len(phrase) and idPost in d:
+				d[idPost] = d[idPost] + len(res);
+			else:
+				d[idPost] = len(res)
+
+	return d;
+
 
 def main():
     opts, resto = getopt(sys.argv[1:], "albdc")
@@ -74,8 +92,8 @@ def main():
     # for line in fileinput.input(resto):
     #     texto += line
 
-    d1 = topN("data/Comments.xml", 10, "Score", "comments")
-    r1 = writeDictionary(d1, "comments", "comment", 0, False)
+    #d1 = topN("data/Comments.xml", 10, "Score", "comments")
+    #r1 = writeDictionary(d1, "comments", "comment", 0, False)
     
     #d2 = topN("data/Posts.xml", 10, "Score", "posts")
     #r2 = writeDictionary(d2, "posts", "post")
@@ -85,6 +103,9 @@ def main():
     
     #d4 = topN("data/Tags.xml", 10, "Count", "tags")
     #r4 = writeDictionary(d4, "tags", "tag")
+
+    d = findPhrase("a", "posts");
+    writeDictionary(d, "posts", "post", 1, True)
 
 main()
 

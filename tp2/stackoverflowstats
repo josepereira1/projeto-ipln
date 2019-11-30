@@ -52,7 +52,9 @@ def writeDictionary(dict, agregation , single, criterion, reverse):
 	root = etree.Element(agregation)
 	iteration = 0;
 
-	for key, val in sorted(dict.items(), key=lambda p: p[criterion], reverse=reverse): 
+	lst = sorted(dict.items(), key=lambda p: p[criterion], reverse=reverse)
+
+	for key, val in lst[:5]: 
 		root.append(etree.Element(single))
 		root[iteration].set("key", str(key))
 		root[iteration].set("value", str(val))
@@ -64,7 +66,7 @@ def writeDictionary(dict, agregation , single, criterion, reverse):
 
 	return root
 
-def findPhrase(phrase, objective):
+def findPhraseOcurrences(phrase, objective, N):
 	root = parseXML("data/Posts.xml")
 
 	d = {}
@@ -92,8 +94,8 @@ def main():
     # for line in fileinput.input(resto):
     #     texto += line
 
-    #d1 = topN("data/Comments.xml", 10, "Score", "comments")
-    #r1 = writeDictionary(d1, "comments", "comment", 0, False)
+    d1 = topN("data/Comments.xml", 10, "Score", "comments")
+    r1 = writeDictionary(d1, "comments", "comment", 0, False)
     
     #d2 = topN("data/Posts.xml", 10, "Score", "posts")
     #r2 = writeDictionary(d2, "posts", "post")
@@ -104,8 +106,8 @@ def main():
     #d4 = topN("data/Tags.xml", 10, "Count", "tags")
     #r4 = writeDictionary(d4, "tags", "tag")
 
-    d = findPhrase("a", "posts");
-    writeDictionary(d, "posts", "post", 1, True)
+    #d = findPhraseOcurrences("cona", "posts", 10);
+    #writeDictionary(d, "posts", "post", 1, True)
 
 main()
 

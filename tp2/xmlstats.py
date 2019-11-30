@@ -2,6 +2,8 @@
 
 import re
 from lxml import etree	#	ferramenta
+import sys
+from getopt import getopt
 
 regIP = r"[ \,\;\:]([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})[ \,\.\;\:\!\?]"
 regURL = r"https?://[A-Za-z0-9\.\/\-\_\#\?\=\&\%]+"
@@ -79,15 +81,43 @@ def top_reg_in_file(filenames : list, attributes : list, regex : str, N : int):
 	lst = sorted(dic.items(), key=lambda reg: reg[1], reverse=True)
 	return lst[:N]
 
+#	python3 xmlstats.py -t '1' -f 'data/Comments.xml' -a 'Text' -r 'java' -l 100
+def main():
+	opts, resto = getopt(sys.argv[1:],"help:h:t:f:a:r:l")
 
-filenames = ["data/Posts.xml", "data/Users.xml", "data/Comments.xml"]
-attributes = ["Body", "AboutMe", "Text"]
+	if opts[0][0] == "-h":	#	HELP
+		print("-t <<type>> -f <<files>> -a <<attributes>> -r <<regex>> -l <<limit>>")
+		sys.exit(1)
 
-ips_mais_publicados = top_reg_in_file(filenames, attributes, regIP, 5)
-print(ips_mais_publicados) 
-to_xml(ips_mais_publicados, "ips_mais_publicados", "ip")
+	tipo = opts[0][1]
+	filenames = opts[1][1].split(',')
+	attributes = opts[2][1].split(',')
+	regex = opts[3][1]
+	limit = int(resto[0])
 
-posts_com_mais_ips = top_reg_by_elem(["data/Posts.xml"], attributes, regIP, 3, "Id")
-print(posts_com_mais_ips)
-to_xml(posts_com_mais_ips, "posts_com_mais_ips", "ip")
+	if tipo == "0":
+		res = top_reg_by_elem(filenames, attributes, regex, limit, "Id")
+		print(res)
+		to_xml(res, "elements", "element")
+	elif tipo == "1":
+		res = top_reg_in_file(filenames, attributes, regex, limit)
+		print(res)
+		to_xml(res, "elements", "element")
+	else:
+		print("Error on type!")
+
+	# filenames = ["data/Posts.xml", "data/Users.xml", "data/Comments.xml"]
+	# attributes = ["Body", "AboutMe", "Text"]
+
+	# ips_mais_publicados = top_reg_in_file(filenames, attributes, regIP, 5)
+	# print(ips_mais_publicados) 
+	# to_xml(ips_mais_publicados, "ips_mais_publicados", "ip")
+
+	# posts_com_mais_ips = top_reg_by_elem(["data/Posts.xml"], attributes, regIP, 3, "Id")
+	# print(posts_com_mais_ips)
+	# to_xml(posts_com_mais_ips, "posts_com_mais_ips", "ip")
+
+main()
+
+	
 

@@ -8,7 +8,40 @@ import fileinput
 from collections import Counter
 
 from lxml import etree	#	ferramenta
+import csv
 
+def parseXML(filename):
+	tree = etree.parse(filename)	#	retorna um ElementTree object	 e não um Element object
+
+	root = tree.getroot()
+
+	return root
+
+def topN(filename, N, field, objective):
+	root = parseXML(filename)
+
+	d = {}
+
+	for elem in root.iter():
+		if elem.tag not in objective:
+			d[elem.get("Id")] = int(elem.get(field))
+
+	for elem in sorted(d.items(), key=lambda p: p[1], reverse=True):
+		print(f"{elem[0]} | {elem[1]}")
+
+	return d
+
+def convertToExcel(dict, outputFile):
+	tree = etree.Element(outputFile)
+
+
+	#w = csv.writer(open(outputFile + ".csv", "w"))
+	
+	for key, val in dict.items():
+		tree.append(etree.Element("comment"))
+		tree.set("key", key)
+		tree.set("value", val)
+		#w.writerow([key,val])
 
 def main():
     opts, resto = getopt(sys.argv[1:], "albdc")
@@ -20,13 +53,13 @@ def main():
     # for line in fileinput.input(resto):
     #     texto += line
 
-    tree = etree.parse("data/Posts.xml")	#	retorna um ElementTree object	 e não um Element object
-    #print(etree.tostring(root, method='text', encoding="UTF-8"))	#	isto vai buscar apenas o texto
-    #print(etree.tostring(root, encoding="UTF-8"))
+    d1 = topN("data/Comments.xml", 10, "Score", "comments")
+    #convertToExcel(d1, "comments")
+    d2 = topN("data/Posts.xml", 10, "Score", "posts")
+    d3 = topN("data/Users.xml", 10, "Reputation", "users")
+    d4 = topN("data/Tags.xml", 10, "Count", "tags")
 
-    for elem in tree.iter():
-    	print(elem.get("Id"))
-
-    # root = tree.getroot()
-    # print(root)
 main()
+
+
+

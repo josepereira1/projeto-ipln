@@ -8,7 +8,8 @@ import fileinput
 from collections import Counter
 
 from lxml import etree	#	ferramenta
-import csv
+import csv	#	escrever em excel
+import pickle	#	escrever em ficheiros
 
 
 #	faz o parse e retorna o objeto do tipo Element
@@ -26,7 +27,7 @@ def topN(filename, N, field, objective):
 
 	for elem in root.iter():
 		if elem.tag not in objective:
-			d[elem.get("Id")] = int(elem.get(field))
+			d[int(elem.get("Id"))] = int(elem.get(field))
 
 	for elem in sorted(d.items(), key=lambda p: p[1], reverse=True):
 		print(f"{elem[0]} | {elem[1]}")
@@ -41,16 +42,27 @@ def convertToExcel(dict, outputFile):
 	for key, val in dict.items():
 		w.writerow([key,val])
 
-def writeDictionary(dict):
-	root = etree.Element("comments")
+#	converte o dicionário em formato ElementTree e guarda num ficheiro
+#	dict: dicionário a escrever
+#	agregation: a categoria, p.e. posts, comments, users
+# 	single: elemento da agregação, sendo respetivamente post, comment, user
+#   criterion: 0 para ordenar pela chave e 1 para ordenar pelo valor
+#	reverse: True para ordenar de forma decrescente e False caso contrário 
+def writeDictionary(dict, agregation , single, criterion, reverse):
+	root = etree.Element(agregation)
+	iteration = 0;
 
-	for key, val in dict.items(): 
-		root.append(etree.Element("comment"))
-		root.set("key", key)
-		root.set("value", val)
+	for key, val in sorted(dict.items(), key=lambda p: p[criterion], reverse=reverse): 
+		root.append(etree.Element(single))
+		root[iteration].set("key", str(key))
+		root[iteration].set("value", str(val))
+		iteration = iteration + 1
+
+	f = open("output/" + agregation,"w")
+	f.write(str(etree.tostring(root, pretty_print = True, encoding='unicode')))
+	f.close()
 
 	return root
-
 
 def main():
     opts, resto = getopt(sys.argv[1:], "albdc")
@@ -63,11 +75,16 @@ def main():
     #     texto += line
 
     d1 = topN("data/Comments.xml", 10, "Score", "comments")
-    #convertToExcel(d1, "comments")
-    #e = writeDictionary(d1)
-    d2 = topN("data/Posts.xml", 10, "Score", "posts")
-    d3 = topN("data/Users.xml", 10, "Reputation", "users")
-    d4 = topN("data/Tags.xml", 10, "Count", "tags")
+    r1 = writeDictionary(d1, "comments", "comment", 0, False)
+    
+    #d2 = topN("data/Posts.xml", 10, "Score", "posts")
+    #r2 = writeDictionary(d2, "posts", "post")
+    
+    #d3 = topN("data/Users.xml", 10, "Reputation", "users")
+    #r3 = writeDictionary(d3, "users", "user")
+    
+    #d4 = topN("data/Tags.xml", 10, "Count", "tags")
+    #r4 = writeDictionary(d4, "tags", "tag")
 
 main()
 

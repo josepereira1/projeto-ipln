@@ -5,9 +5,13 @@ from lxml import etree	#	ferramenta
 import sys
 from getopt import getopt
 
+
+
 regIP = r"[ \,\;\:]([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})[ \,\.\;\:\!\?]"
 regURL = r"https?://[A-Za-z0-9\.\/\-\_\#\?\=\&\%]+"
 regLang = r"(java|python|haskell|C#|mysql|mongodb)|[ \,\;\:]([CR])[ \,\.\;\:\!\?]"
+
+output_dir = "output/"
 
 
 def from_xml(filename):
@@ -30,7 +34,7 @@ def to_xml(lst : list, agregation : str, single : str):
 		root[iteration].set("value", str(val))
 		iteration = iteration + 1
 
-	f = open("output/" + agregation + ".xml","w")
+	f = open(output_dir + agregation + ".xml","w")
 	f.write(str(etree.tostring(root, pretty_print = True, encoding='unicode')))
 	f.close()
 
@@ -41,6 +45,7 @@ def to_xml(lst : list, agregation : str, single : str):
 # output: a regex regIP mostra que os 3 posts que publicaram mais IP's são: Id="91782" => 128 IP's
 #                                                                           Id="164489" => 80 IP's
 #                                                                           Id="76535" => 60 IP's
+
 def top_reg_by_elem(filenames : list, attributes : list, regex : str, N : int, keyAttr : int):
 
 	dic = {}
@@ -65,6 +70,7 @@ def top_reg_by_elem(filenames : list, attributes : list, regex : str, N : int, k
 # output_2: a regex regIP mostra que os 3 IP's mais publicados são: '127.0.0.1' => 357 vezes
 #                                                                   '0.0.0.0' => 152 vezes
 #                                                                   '192.168.0.7' => 76 vezes
+
 def top_reg_in_file(filenames : list, attributes : list, regex : str, N : int):
 
 	dic = {}

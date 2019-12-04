@@ -9,7 +9,7 @@ from getopt import getopt
 
 regIP = r"[ \,\;\:]([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})[ \,\.\;\:\!\?]"
 regURL = r"https?://[A-Za-z0-9\.\/\-\_\#\?\=\&\%]+"
-regLang = r"(java|python|haskell|C#|mysql|mongodb)|[ \,\;\:]([CR])[ \,\.\;\:\!\?]"
+regLang = r"(java|python|haskell|C#|mysql|mongodb)"
 
 output_dir = "output/"
 
@@ -140,8 +140,6 @@ def main():
 		print("[top_reg_by_file] -t <<type == 1>> -f <<files>> -a <<attributes>> -r <<regex>> -l <<limit>>")
 		print("[top_reg_sort_by_atribute] -t <<type == 2>> -f <<files>> -a <<attributes>> -r <<regex>> -c <<cast int (1 = yes & 0 = no), if attribute is integer>> -l <<limit>>")
 		sys.exit(1)
-
-	print(opts)
 	
 	tipo = opts[0][1]
 	filenames = opts[1][1].split(',')
@@ -171,17 +169,6 @@ def main():
 		to_xml(res)
 	else:
 		print("Error on type!")
-
-	# filenames = ["data/Posts.xml", "data/Users.xml", "data/Comments.xml"]
-	# attributes = ["Body", "AboutMe", "Text"]
-
-	# ips_mais_publicados = top_reg_in_file(filenames, attributes, regIP, 5)
-	# print(ips_mais_publicados) 
-	# to_xml(ips_mais_publicados, "ips_mais_publicados", "ip")
-
-	# posts_com_mais_ips = top_reg_by_elem(["data/Posts.xml"], attributes, regIP, 3, "Id")
-	# print(posts_com_mais_ips)
-	# to_xml(posts_com_mais_ips, "posts_com_mais_ips", "ip")
 
 main()
 

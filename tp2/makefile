@@ -6,7 +6,7 @@ LIMIT = 10						#	top 10
 
 #	EXECUÇÃO PERSONALIZADA PARA CADA TIPO DE FUNCIONALIDADE (PODE SE MUDAR OS ARGUMENTOS ACIMA):
 
-run_f1: xmlstats.py
+run_f1_: xmlstats.py
 	python3 xmlstats.py -t 0 -f ${INPUT_FILES} -a ${ATRIBUTES} -r ${REGEX} -l ${LIMIT}
 
 run_f2: xmlstats.py
@@ -30,23 +30,3 @@ run_f3: xmlstats.py
 #	ATRIBUTES = 'Body,Text'
 
 #	o campo Body está presente no ficheiro Posts.xml, o Text no ficheiro Comments.xml
-
-
-
-
-
-#	MACROS DE EXEMPLOS DE EXECUÇÃO:
-
-f1: xmlstats.py data/Posts.xml 
-	python3 xmlstats.py -t 0 -f 'data/Posts.xml' -a 'Body' -r 'java' -c 1 -l 15
-
-f2: xmlstats.py data/Posts.xml 
-	python3 xmlstats.py -t 1 -f 'data/Posts.xml' -a 'Body' -r 'java' -l 10
-
-f3: xmlstats.py data/Posts.xml 
-	python3 xmlstats.py -t 2 -f 'data/Posts.xml' -a 'Score' -r '[0-9]+' -c 1 -l 15
-
-#	EXEMPLO DE EXECUÇÃO COM VÁRIOS FICHEIROS E RESPETIVOS ATRIBUTOS:
-
-f4: xmlstats.py data/Posts.xml data/Comments.xml
-	python3 xmlstats.py -t 0 -f 'data/Posts.xml,data/Comments.xml' -a 'Body,Text' -r 'java' -l 15

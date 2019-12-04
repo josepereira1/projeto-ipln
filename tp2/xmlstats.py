@@ -86,6 +86,11 @@ def top_reg_in_file(filenames : list, attributes : list, regex : str, N : int):
 	lst = sorted(dic.items(), key=lambda reg: reg[1], reverse=True)
 	return lst[:N]
 
+
+# ex: permite para o atributo especificado armazenar o respetivo valor caso o mesmo tenha correspondência com a regex.
+# output: a regex regIP mostra que os 3 posts com mais score: Id="91782" => 56
+#                                                             Id="164489" => 50
+#                                                             Id="76535" => 45
 def top_reg_sort_by_atribute(filenames : list, attributes : list, regex : str, N : int, keyAttr : int, castInt: bool):
 
 	dic = {}
@@ -136,6 +141,8 @@ def main():
 		print("[top_reg_sort_by_atribute] -t <<type == 2>> -f <<files>> -a <<attributes>> -r <<regex>> -c <<cast int (1 = yes & 0 = no), if attribute is integer>> -l <<limit>>")
 		sys.exit(1)
 
+	print(opts)
+	
 	tipo = opts[0][1]
 	filenames = opts[1][1].split(',')
 	attributes = opts[2][1].split(',')

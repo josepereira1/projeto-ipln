@@ -1,22 +1,38 @@
+#!/usr/bin/python3
 import re
 import ast # usada para converter string para dicionário na função loadNGrama()
 import threading
+from getopt import getopt
+import sys
+import fileinput
 # import unidecode
 
 class Solution (threading.Thread):
 
-    def __init__(self, id, ngrama, text):
+    def __init__(self, id, ngrama, filename):
         threading.Thread.__init__(self)
         self.id = id
         self.ngrama = ngrama
-        self.text = text
+        self.filename = filename
 
     def run(self):
+        print(f"Start Thread {self.id} ...")
+        text = ""
+
+        for line in fileinput.input(self.filename):
+            text += line
+
         tmp_key = ""
         for key in self.ngrama:
             tmp_key = re.sub("\ ", "", key)
-            self.text = re.sub(tmp_key, key, self.text)
-        print("Thread " + self.id + ": " + self.text)
+            text = re.sub(tmp_key, key, text)
+
+        f = open(self.filename, "w")
+        f.write(text)
+        f.close()
+
+        print(f"End of Thread {self.id} ...")
+
 
     def nGrama(text, N):
         counter = {}
@@ -55,15 +71,38 @@ class Solution (threading.Thread):
 
 
 def main():
-    Solution.treino("files/files-to-training/portuguese-training.txt", "files/ngrams/ngrama", 2, sort=True)
-    ngrama = Solution.loadNGrama("files/ngrams/ngrama")
-    fileNames = ["ElefoicomeracasadoCarlos", "Eladissequesim"]
-    N_THREADS = len(fileNames)
-    threads = [] # arrays de threads
+    opts, resto = getopt(sys.argv[1:],"help:h:t:f:")
+    print(len(sys.argv))
 
-    for i in range(N_THREADS):
-        s = Solution(str(i), ngrama, fileNames[i])
-        threads.append(s)
-        s.start()
+    if len(sys.argv) > 3:
+        print("Error! Only one argument!")
+        sys.exit(1)
+
+    if opts[0][0] == "-h":  #   HELP
+        print("HELP!")
+        sys.exit(1)
+
+    filenames = []
+
+    if opts[0][0] == "-t":
+        print("Start ...")
+        filenames = opts[0][1].split(',')
+        Solution.treino(filenames[0], filenames[1], 2, sort=True)
+        print("End!")
+        sys.exit(1)
+
+    if opts[0][0] == "-f":
+        filenames = opts[0][1].split(',')
+        ngramDir = "files/ngrams/ngrama"
+        ngrama = Solution.loadNGrama(ngramDir)
+
+        threads = [] # arrays de threads
+
+        for i in range(len(filenames)):
+            s = Solution(str(i), ngrama, filenames[i])
+            threads.append(s)
+            s.start()
+
 
 main()
+

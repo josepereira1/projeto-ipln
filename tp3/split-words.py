@@ -34,8 +34,7 @@ class Solution (threading.Thread):
         print(f"End of Thread {self.id} ...")
 
 
-    def nGrama(text, N):
-        counter = {}
+    def nGrama(text, N, counter):
         # text = unidecode.unidecode(text) # remove acentos => unidecode("olá") = "ola"
         # text = text.lower() # obtem o texto todo em mínusculas
         words = re.findall(r"[\wÀ-Üà-ü]+", text) # obtem as palavras do texto (removendo pontuação, espaços, etc)
@@ -60,19 +59,23 @@ class Solution (threading.Thread):
         return ast.literal_eval(text) # converte a string para dicionário
 
     # Lê o texto de um ficheiro (input), calcula o N-grama e escreve o mesmo num ficheiro (output)
-    def treino(input, output, N, sort):
-        fileInput = open(input, "r", encoding='utf-8')
-        text = fileInput.read()
-        fileInput.close()
-        ngrama = Solution.nGrama(text, N)
-        if sort:
-            ngrama = dict(sorted(ngrama.items(), key=lambda item: item[1], reverse = True))
+    def treino(filenames, N, sort):
+        output = "files/ngrams/ngrama"
+        ngrama = {}
+
+        for file in filenames:
+            fileInput = open(file, "r", encoding='utf-8')
+            text = fileInput.read()
+            fileInput.close()
+            ngrama = Solution.nGrama(text, N, ngrama)
+        
+        # if sort:
+        #     ngrama = dict(sorted(ngrama.items(), key=lambda item: item[1], reverse = True))
         Solution.saveNGrama(ngrama, output) # escreve o n-grama no ficheiro output
 
 
 def main():
     opts, resto = getopt(sys.argv[1:],"help:h:t:f:")
-    print(len(sys.argv))
 
     if len(sys.argv) > 3:
         print("Error! Only one argument!")
@@ -87,13 +90,14 @@ def main():
     if opts[0][0] == "-t":
         print("Start ...")
         filenames = opts[0][1].split(',')
-        Solution.treino(filenames[0], filenames[1], 2, sort=True)
+        Solution.treino(filenames, 2, sort=True)
         print("End!")
         sys.exit(1)
 
     if opts[0][0] == "-f":
         filenames = opts[0][1].split(',')
         ngramDir = "files/ngrams/ngrama"
+        print("Loading ...")
         ngrama = Solution.loadNGrama(ngramDir)
 
         threads = [] # arrays de threads

@@ -1,0 +1,50 @@
+Resumo:
+	O programa split-words, utilizando treinos previamente feitos através de textos, consegue corrigir um texto que se encontre com todas as palavras juntas ("coladas"), exemplo:
+	
+		input:  "Hojeestáumlindodia"
+		output: "Hoje está um lindo dia"
+
+		Nota 1: no caso do programa, o output é escrito em ficheiros .sw
+		Nota 2: importante realçar que o programa não tem uma excelente precisão, no entanto, consegue bons resultados, principalmente se for utilizado um bom treino
+
+
+Funcionalidades:
+
+	Notas: não é possível conjungar/executar várias funcionalidades em simultâneo
+	
+	1.
+	Nome:        help
+	Descrição:   lista as várias funcionalidades e respetivas descrições e argumentos  necessários
+	Comando:     python3 split-words.py -h
+	Argumentos:  -h -> para listar as funcionalidades
+
+	2.
+	Nome:	     training
+	Descrição:   faz o treino através de textos, necessário para a execução do programa, deve 		   ser feito pelo menos uma vez, antes de executar a funcionalidade {3}.
+	Comando:     python3 split-words.py -n 2 -s 1 -t 'file1,file2,file3'
+	Argumentos:  -n -> valor do N-grama
+	             -s -> 0 -> não ordenar o ngrama (critério número de ocorrências)
+	                   1 -> ordenar o ngrama (critério número de ocorrências, obtém melhores resultados, no entanto, mais pesado)
+	             -t -> lista de ficheiros para treinar o ngrama
+	Exemplo:     split-words.py -n 2 -s 1 -t 'files/files-to-training/os-maias.txt,files/files-to-training/reliquia.txt'
+
+	3.
+	Nome:        split-words
+	Descrição:   corrige um texto que se encontra com as palavras juntas ("coladas")
+	Comando      python3 split-words.py -f 'file1,file2'
+	Argumentos:  -f -> lista de ficheiros a corrigir
+	Exemplo:     python3 split-words.py -f 'exemplo1,exemplo2'
+
+	NOTA IMPORTANTE: output é escrito em ficheiros .sw com o mesmo nome dos ficheiros dados como input
+
+
+Observações:
+
+	Encontram-se dois ficheiros de exemplo (exemplo1, exemplo2) de input para testar a funcionalidade {3}. No exemplo1, é feita uma correção com 100% de precisão. No caso do exemplo2, verifica-se que não houve 100% de precisão, sendo este exemplo para demonstrar que o programa não obtém sempre resultados com 100% de precisão.
+
+	Existe um pasta denominada "files", que contém os ficheiros de treino utilizados pelo grupo, bem como, a pasta onde é guardado o ficheiro do ngrama.
+	Recomenda-se não destruir esta pasta, mas caso seja necessário fazê-lo, deve modificar a variável "output" (linha 11), que se encontra no ínicio do código, para definir a localização, onde é guardado o ngrama. 
+
+
+
+	

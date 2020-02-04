@@ -1,0 +1,145 @@
+\documentclass[11pt,a4paper]{report}%especifica o tipo de documento que tenciona escrever: carta, artigo, relatório... neste caso é um relatório
+% [11pt,a4paper] Define o tamanho principal das letras do documento. caso não especifique uma delas, é assumido 10pt
+% a4paper -- Define o tamanho do papel.
+\usepackage{float}
+\usepackage[portuges]{babel}%Babel -- irá activar automaticamente as regras apropriadas de hifenização para a língua todo o
+                                   %-- o texto gerado é automaticamente traduzido para Português.
+                                   %  Por exemplo, “chapter” irá passar a “capítulo”, “table of contents” a “conteúdo”.
+                                   % portuges -- específica para o Português.
+\usepackage[utf8]{inputenc} % define o encoding usado texto fonte (input)--usual "utf8" ou "latin1
+
+\usepackage{graphicx} %permite incluir graficos, tabelas, figuras
+\usepackage{url} % para utilizar o comando \url{}
+\usepackage{enumerate} %permite escolher, nas listas enumeradas, se os iems sao marcados com letras ou numeros-romanos em vez de numeracao normal
+
+%\usepackage{apalike} % gerar biliografia no estilo 'named' (apalike)
+
+\usepackage{color} % Para escrever em cores
+
+\usepackage{multirow} %tabelas com multilinhas
+\usepackage{array} %formatação especial de tabelas em array
+
+\usepackage[pdftex]{hyperref} % transformar as referências internas do seu documento em hiper-ligações.
+
+%Exemplos de fontes -- nao e vulgar mudar o tipo de fonte
+%\usepackage{tgbonum} % Fonte de letra: TEX Gyre Bonum
+%\usepackage{lmodern} % Fonte de letra: Latin Modern Sans Serif
+%\usepackage{helvet}  % Fonte de letra: Helvetica
+%\usepackage{charter} % Fonte de letra:Charter
+
+\definecolor{saddlebrown}{rgb}{0.55, 0.27, 0.07} % para definir uma nova cor, neste caso 'saddlebrown'
+
+\usepackage{listings}  % para utilizar blocos de texto verbatim no estilo 'listings'
+%paramerização mais vulgar dos blocos LISTING - GENERAL
+\lstset{
+	basicstyle=\small, %o tamanho das fontes que são usadas para o código
+	numbers=left, % onde colocar a numeração da linha
+	numberstyle=\tiny, %o tamanho das fontes que são usadas para a numeração da linha
+	numbersep=5pt, %distancia entre a numeração da linha e o codigo
+	breaklines=true, %define quebra automática de linha
+    frame=tB,  % caixa a volta do codigo
+	mathescape=true, %habilita o modo matemático
+	escapeinside={(*@}{@*)} % se escrever isto  aceita tudo o que esta dentro das marcas e nao altera
+}
+%
+%\lstset{ %
+%	language=Java,							% choose the language of the code
+%	basicstyle=\ttfamily\footnotesize,		% the size of the fonts that are used for the code
+%	keywordstyle=\bfseries,					% set the keyword style
+%	%numbers=left,							% where to put the line-numbers
+%	numberstyle=\scriptsize,				% the size of the fonts that are used for the line-numbers
+%	stepnumber=2,							% the step between two line-numbers. If it's 1 each line
+%											% will be numbered
+%	numbersep=5pt,							% how far the line-numbers are from the code
+%	backgroundcolor=\color{white},			% choose the background color. You must add \usepackage{color}
+%	showspaces=false,						% show spaces adding particular underscores
+%	showstringspaces=false,					% underline spaces within strings
+%	showtabs=false,							% show tabs within strings adding particular underscores
+%	frame=none,								% adds a frame around the code
+%	%abovecaptionskip=-.8em,
+%	%belowcaptionskip=.7em,
+%	tabsize=2,								% sets default tabsize to 2 spaces
+%	captionpos=b,							% sets the caption-position to bottom
+%	breaklines=true,						% sets automatic line breaking
+%	breakatwhitespace=false,				% sets if automatic breaks should only happen at whitespace
+%	title=\lstname,							% show the filename of files included with \lstinputlisting;
+%											% also try caption instead of title
+%	escapeinside={\%*}{*)},					% if you want to add a comment within your code
+%	morekeywords={*,...}					% if you want to add more keywords to the set
+%}
+
+\usepackage{xspace} % deteta se a seguir a palavra tem uma palavra ou um sinal de pontuaçao se tiver uma palavra da espaço, se for um sinal de pontuaçao nao da espaço
+
+\parindent=0pt %espaço a deixar para fazer a  indentação da primeira linha após um parágrafo
+\parskip=2pt % espaço entre o parágrafo e o texto anterior
+
+\setlength{\oddsidemargin}{-1cm} %espaço entre o texto e a margem
+\setlength{\textwidth}{18cm} %Comprimento do texto na pagina
+\setlength{\headsep}{-1cm} %espaço entre o texto e o cabeçalho
+\setlength{\textheight}{23cm} %altura do texto na pagina
+
+% comando '\def' usado para definir abreviatura (macros)
+% o primeiro argumento é o nome do novo comando e o segundo entre chavetas é o texto original, ou sequência de controle, para que expande
+\def\darius{\textsf{Darius}\xspace}
+\def\antlr{\texttt{AnTLR}\xspace}
+\def\pe{\emph{Publicação Eletrónica}\xspace}
+\def\titulo#1{\section{#1}}    %no corpo do documento usa-se na forma '\titulo{MEU TITULO}'
+\def\super#1{{\em Supervisor: #1}\\ }
+\def\area#1{{\em \'{A}rea: #1}\\[0.2cm]}
+\def\resumo{\underline{Resumo}:\\ }
+
+%\input{LPgeneralDefintions} %permite ler de um ficheiro de texto externo mais definições
+
+\title{Introdução ao Processamento de Linguagem Natural\\
+        Trabalho Prático 3\\
+       \textbf{Programa Split-words}\\ Relatório de Desenvolvimento
+       } %Titulo do documento
+%\title{Um Exemplo de Artigo em \LaTeX}
+\author{José André Martins Pereira\\ (a82880@alunos.uminho.pt) \and Ricardo André Gomes Petronilho\\ (a81744@alunos.uminho.pt)
+       } %autores do documento
+\date{\today} %data
+
+\begin{document} % corpo do documento
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.50]{images/uminho-logo.png}
+\end{figure}
+
+\maketitle % apresentar titulo, autor e data
+
+%\tableofcontents % Insere a tabela de indice
+%\listoffigures % Insere a tabela de indice figuras
+%\listoftables % Insere a tabela de indice tabelas
+
+\section{Contextualização e objetivos}
+\hspace{5mm} Na unidade curricular de Introdução ao Processamento de Linguagem Natural, foram-nos propostas várias opções para o trabalho prático três.
+
+\hspace{5mm} Desta forma, a equipa escolheu a opção dois, que consiste no desenvolvimento de um programa, que recebe um texto, onde as palavras se encontram juntas ("coladas"). O objetivo do programa desenvolvido, consiste em determinar as possíveis palavras desse texto, colocando espaços no mesmo.
+
+\section{Solução para o problema}
+\hspace{5mm} A solução encontrada pela equipa, para satisfazer os requisitos dos docentes para a opção dois, consiste na construção de \textit{N-Gramas} (N variável), sendo este um treino/conhecimento, feito através de textos, para ser utilizado no programa \textbf{Split-words}. 
+
+\hspace{5mm} A execução do programa necessita sempre deste treino. No entanto, para facilitar o processo, bem como reduzir o tempo de execução, guarda-se o conhecimento em ficheiros, para reutilização.
+
+\hspace{5mm} O tipo de dados utilizado para guardar o treino, consiste num dicionário, onde a chave é a combinação de palavras, e o valor o número de ocorrências da mesma, nos textos utilizados para treino. 
+
+\hspace{5mm} Desta forma, o programa, percorre o dicionário, isto é, as chaves (combinações de palavras) do mesmo, e procura-as no texto recebido, que contém as palavras juntas, substituindo as mesmas (colocando espaços), quando ocorre \textit{match}. Importante referir, como as palavras do texto encontram-se juntas, as chaves do dicionário também são colocadas dessa forma, isto é, juntas, no entanto, numa cópia, mantendo-se o estado original no dicionário. Quando ocorre \textit{match}, visto que se guardou o estado original no dicionário, basta substituir a chave no texto.
+
+\hspace{5mm} No entanto, não se consegue garantir grande precisão, pois, pode existir confusão com determinadas combinações de palavras, como: \textit{"com o", "como"}. Do mesmo modo, a qualidade do treino torna-se muito importante para obtenção de bons resultados, tanto em quantidade, como no tipo de linguagem. A solução possível para resolução do problema referido acima, seria a avaliação das palavras próximas, isto é, a identificação do tipo de palavras (verbos, nomes, determinantes, etc ...), antes e depois da palavra em questão. No entanto, a equipa não teve tempo para implementar esta possível solução. 
+
+\hspace{5mm} Como funcionalidade adicional, ou melhoria de performance, decidiu-se garantir a possibilidade de se aplicar o programa a vários ficheiros. No entanto, tal como referido, foram feitas melhorias de performance a este nível, pois, a execução de vários ficheiros realiza-se em paralelo. Na verdade, são criadas tantas \textit{Threads}, quanto o número de ficheiros, reduzindo-se aproximadamente o tempo em \textbf{y} (y = número de ficheiros) vezes menor.
+
+\section{Observações}
+\hspace{5mm} A realização do teste prático do programa deve ser efetuada, lendo previamente o ficheiro \textbf{README}, onde se especifica todas a funcionalidades disponíveis, os argumentos necessários, entre outras notas importantes.
+
+\section{Conclusões}
+\hspace{5mm} Em suma, o programa final, não obtém resultados excelentes, tal como referido acima, devido à necessidade de uma melhor avaliação das palavras em questão, no entanto, conclui-se, mesmo assim, que se obtém bons resultados. 
+
+\hspace{5mm}A realização deste trabalho, permitiu, a aplicação dos conhecimentos sobre \textit{N-Gramas}, e uma melhor percepção da utilidade dos mesmos, para diversos problemas. Do mesmo modo, o trabalho contribuiu para o melhor conhecimento da ferramenta \textit{Python} e poder da mesma.
+
+\hspace{5mm} Outros conhecimentos lecionados na unidade curricular, foram aplicados, tais como: expressões regulares, tipos de dados utilizados (dicionário), ordenações, obtenção de argumentos da linha de comandos. 
+
+\hspace{5mm} No entanto, neste trabalho prático, decidiu-se explorar um pouco o paradigma de orientado a objetos, criando-se classes necessárias e respetivas instâncias.
+
+\end{document}

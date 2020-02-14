@@ -1,2 +1,2 @@
 # projeto-pln
-Projeto de Processamento de Linguagens
+Projetos de Introdução ao Processamento de Linguagem Natural

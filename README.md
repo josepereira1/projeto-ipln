@@ -1,4 +1,4 @@
-# projeto-pln
+# projeto-ipln
 Projetos de Introdução ao Processamento de Linguagem Natural
 
 # Grupo:
